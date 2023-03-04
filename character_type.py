@@ -1,27 +1,29 @@
-class CharacterType:
+from error_message import ErrorMessage
 
+
+class CharacterType:
     def __init__(self, name):
         self.validate(name)
 
         self.name = name
         self._min = 1
         self._max = 16
-        self._filter = lambda c : True
+        self._filter = lambda c: True
         self.characters = []
 
     def validate(self, name):
-        if not name: 
-            raise ValueError("You cannot specify an empty and None value for the name property.")
+        if not name:
+            raise ValueError(ErrorMessage.EMPTY_NAME.value)
 
     def validate_range(self, min, max):
         if type(min) != int or type(max) != int:
-            raise ValueError("The min and max value must be numberic.")
+            raise ValueError(ErrorMessage.MIN_MAX_NOT_NUMBERIC.value)
 
         if min < 0 or max < 0:
-            raise ValueError("The min and max can only be specified as integers greater than or equal to 0.")
+            raise ValueError(ErrorMessage.MIN_MAX_NAGATIVE.value)
 
         if min > max:
-            raise ValueError("The min value must be less than the max value.")
+            raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
 
     @property
     def min(self):
@@ -38,15 +40,13 @@ class CharacterType:
     @min.setter
     def min(self, value):
         self.validate_range(value, self._max)
-        
         self._min = value
 
     @max.setter
     def max(self, value):
         self.validate_range(self._min, value)
-
         self._max = value
-    
+
     @filter.setter
     def filter(self, value):
         self._filter = value
@@ -54,6 +54,6 @@ class CharacterType:
     def save_character(self, character):
         if self._filter(character):
             if len(self.characters) >= self.max:
-                raise OverflowError("The number of characters that can be stored must be less than the max value.") 
+                raise OverflowError(ErrorMessage.CHAR_COUNT_OUT_OF_RANGE.value)
 
             self.characters.append(character)
