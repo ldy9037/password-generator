@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import string
 
 from character_type import CharacterType
 from error_message import ErrorMessage
@@ -11,15 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 class TestCharacterType(unittest.TestCase):
 
     def setUp(self):
-        self.uppercase = CharacterType("uppercase")
-
-    def test_create_with_blank_and_none_name(self):
-        names = ["", None]
-        expected = ErrorMessage.EMPTY_NAME.value
-
-        for name in names:
-            with self.assertRaisesRegex(ValueError, expected):
-                CharacterType(name)
+        self.uppercase = CharacterType(string.ascii_uppercase.split())
 
     def test_set_min_greater_than_max(self):
         expected = ErrorMessage.MIN_MAX_INVALID_RANGE.value
@@ -51,31 +44,14 @@ class TestCharacterType(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, expected):
                 self.uppercase.max = num
 
-    def test_save_character(self):
-        characters = ["a", "b", "c", "d", "e"]
+    def test_generate_characters(self):
+        generate_length = self.uppercase.min
+        self.uppercase.generate(generate_length)
 
-        for character in characters:
-            self.uppercase.save_character(character)
+        self.assertEqual(len(self.uppercase.characters), generate_length)
 
-        self.assertListEqual(self.uppercase.characters, characters)
-
-    def test_save_character_with_filter(self):
-        characters = ["a", "B", "c", "D", "E"]
-        expected = ["B", "D", "E"]
-
-        self.uppercase.filter = lambda c: c.isupper()
-
-        for character in characters:
-            self.uppercase.save_character(character)
-
-        self.assertListEqual(self.uppercase.characters, expected)
-
-    def test_save_character_more_than_max(self):
-        expected = ErrorMessage.CHAR_COUNT_OUT_OF_RANGE.value
-
-        with self.assertRaisesRegex(OverflowError, expected):
-            for _ in range(self.uppercase.max + 1):
-                self.uppercase.save_character("A")
+        for char in self.uppercase.characters:
+            self.assertTrue(char in self.uppercase._candidate)
 
 
 if __name__ == '__main__':

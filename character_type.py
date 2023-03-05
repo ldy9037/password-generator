@@ -1,19 +1,14 @@
 from error_message import ErrorMessage
+from random import choice
 
 
 class CharacterType:
-    def __init__(self, name):
-        self.validate(name)
 
-        self.name = name
+    def __init__(self, candidate):
+        self._candidate = candidate
         self._min = 1
         self._max = 16
-        self._filter = lambda c: True
         self.characters = []
-
-    def validate(self, name):
-        if not name:
-            raise ValueError(ErrorMessage.EMPTY_NAME.value)
 
     def validate_range(self, min, max):
         if type(min) != int or type(max) != int:
@@ -51,9 +46,6 @@ class CharacterType:
     def filter(self, value):
         self._filter = value
 
-    def save_character(self, character):
-        if self._filter(character):
-            if len(self.characters) >= self.max:
-                raise OverflowError(ErrorMessage.CHAR_COUNT_OUT_OF_RANGE.value)
-
-            self.characters.append(character)
+    def generate(self, length):
+        for _ in range(length):
+            self.characters.append(choice(self._candidate))
