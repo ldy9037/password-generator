@@ -5,10 +5,16 @@ from random import choice
 class CharacterType:
 
     def __init__(self, candidate):
+        self.validate_candidate(candidate)
+
         self._candidate = candidate
         self._min = 1
         self._max = 16
         self.characters = []
+
+    def validate_candidate(self, candidate):
+        if not candidate:
+            raise ValueError(ErrorMessage.EMPTY_CANDIDATE.value)
 
     def validate_range(self, min, max):
         if type(min) != int or type(max) != int:

@@ -14,6 +14,15 @@ class TestCharacterType(unittest.TestCase):
     def setUp(self):
         self.uppercase = CharacterType(string.ascii_uppercase.split())
 
+    def test_create_empty_condidate(self):
+        expected = ErrorMessage.EMPTY_CANDIDATE.value
+
+        with self.assertRaises(TypeError):
+            self.uppercase = CharacterType()
+
+        with self.assertRaisesRegex(ValueError, expected):
+            self.uppercase = CharacterType([])
+
     def test_set_min_greater_than_max(self):
         expected = ErrorMessage.MIN_MAX_INVALID_RANGE.value
 
