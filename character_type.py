@@ -4,19 +4,19 @@ from random import choice
 
 class CharacterType:
 
-    def __init__(self, candidate):
+    def __init__(self, candidate: list) -> None:
         self.validate_candidate(candidate)
 
-        self._candidate = candidate
-        self._min = 1
-        self._max = 16
-        self.characters = []
+        self._candidate: list = candidate
+        self._min: int = 1
+        self._max: int = 16
+        self.characters: list = []
 
-    def validate_candidate(self, candidate):
+    def validate_candidate(self, candidate: list) -> None:
         if not candidate:
             raise ValueError(ErrorMessage.EMPTY_CANDIDATE.value)
 
-    def validate_range(self, min, max):
+    def validate_range(self, min: int, max: int) -> None:
         if type(min) != int or type(max) != int:
             raise ValueError(ErrorMessage.MIN_MAX_NOT_NUMBERIC.value)
 
@@ -26,7 +26,7 @@ class CharacterType:
         if min > max:
             raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
 
-    def validate_length(self, length):
+    def validate_length(self, length: int) -> None:
         if type(length) != int:
             raise ValueError(ErrorMessage.GENERATE_LENGTH_NOT_NUMBERIC.value)
 
@@ -34,32 +34,24 @@ class CharacterType:
             raise ValueError(ErrorMessage.GENERATE_LENGTH_OUT_OF_RANGE.value)
 
     @property
-    def min(self):
+    def min(self) -> int:
         return self._min
 
-    @property
-    def max(self):
-        return self._max
-
-    @property
-    def filter(self):
-        return self._filter
-
     @min.setter
-    def min(self, value):
+    def min(self, value: int) -> None:
         self.validate_range(value, self._max)
         self._min = value
 
+    @property
+    def max(self) -> int:
+        return self._max
+
     @max.setter
-    def max(self, value):
+    def max(self, value: int) -> None:
         self.validate_range(self._min, value)
         self._max = value
 
-    @filter.setter
-    def filter(self, value):
-        self._filter = value
-
-    def generate(self, length):
+    def generate(self, length: int) -> None:
         self.validate_candidate(self._candidate)
         self.validate_length(length)
 

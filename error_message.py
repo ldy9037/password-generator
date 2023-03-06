@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ErrorMessage(Enum):
     MIN_MAX_NOT_NUMBERIC = "The min and max value must be numberic."
     MIN_MAX_NAGATIVE = "The min and max can only be specified as integers greater than or equal to 0."
