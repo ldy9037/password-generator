@@ -62,6 +62,28 @@ class TestCharacterType(unittest.TestCase):
         for char in self.uppercase.characters:
             self.assertTrue(char in self.uppercase._candidate)
 
+    def test_generate_characters_with_empty_candidate(self):
+        expected = ErrorMessage.EMPTY_CANDIDATE.value
+        self.uppercase._candidate = []
+
+        with self.assertRaisesRegex(ValueError, expected):
+            self.uppercase.generate(1)
+
+    def test_generate_characters_with_out_of_range(self):
+        expected = ErrorMessage.GENERATE_LENGTH_OUT_OF_RANGE.value
+
+        for length in [self.uppercase.min - 1, self.uppercase.max + 1]:
+            with self.assertRaisesRegex(ValueError, expected):
+                self.uppercase.generate(length)
+
+    def test_generate_characters_with_not_numberic(self):
+        expected = ErrorMessage.GENERATE_LENGTH_NOT_NUMBERIC.value
+        nums = ["123", "d", 'A', "$"]
+
+        for num in nums:
+            with self.assertRaisesRegex(ValueError, expected):
+                self.uppercase.generate(num)
+
 
 if __name__ == '__main__':
     unittest.main()

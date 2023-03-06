@@ -26,6 +26,13 @@ class CharacterType:
         if min > max:
             raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
 
+    def validate_length(self, length):
+        if type(length) != int:
+            raise ValueError(ErrorMessage.GENERATE_LENGTH_NOT_NUMBERIC.value)
+
+        if length < self.min or length > self.max:
+            raise ValueError(ErrorMessage.GENERATE_LENGTH_OUT_OF_RANGE.value)
+
     @property
     def min(self):
         return self._min
@@ -53,5 +60,8 @@ class CharacterType:
         self._filter = value
 
     def generate(self, length):
+        self.validate_candidate(self._candidate)
+        self.validate_length(length)
+
         for _ in range(length):
             self.characters.append(choice(self._candidate))
