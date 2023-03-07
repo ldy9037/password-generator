@@ -4,6 +4,7 @@ import sys
 import unittest
 
 from password_generator import PasswordGenerator
+from error_message import ErrorMessage
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -25,20 +26,35 @@ class TestPasswordGenerator(unittest.TestCase):
             self.assertListEqual(
                 self.generator.types[name].candidate, candidate)
 
-    def test_set_min_and_max_of_character_type_(self) -> None:
-        common_types = [
-            ('uppercase', 0, 16),
-            ('lowercase', 1, 12),
-            ('digits', 2, 6),
-            ('special', 5, 5)
-        ]
+    def test_set_min_greater_than_max(self):
+        expected = ErrorMessage.MIN_MAX_INVALID_RANGE.value
 
-        for name, min, max in common_types:
-            self.generator.types[name].min = min
-            self.generator.types[name].max = max
+        for min in range(1, 10):
+            with self.assertRaisesRegex(ValueError, expected):
+                self.generator.min = min
+                self.generator.max = min - 1
 
-            self.assertEqual(self.generator.types[name].min, min)
-            self.assertEqual(self.generator.types[name].max, max)
+    def test_set_non_numberic_min_max(self) -> None:
+        nums = ["123", "d", 'A', "$"]
+        expected = ErrorMessage.MIN_MAX_NOT_NUMBERIC.value
+
+        for num in nums:
+            with self.assertRaisesRegex(ValueError, expected):
+                self.generator.min = num
+
+            with self.assertRaisesRegex(ValueError, expected):
+                self.generator.max = num
+
+    def test_set_negative_number_min_max(self) -> None:
+        nums = [-1, -3, -11]
+        expected = ErrorMessage.MIN_MAX_NAGATIVE.value
+
+        for num in nums:
+            with self.assertRaisesRegex(ValueError, expected):
+                self.generator.min = num
+
+            with self.assertRaisesRegex(ValueError, expected):
+                self.generator.max = num
 
 
 if __name__ == '__main__':
