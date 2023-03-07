@@ -51,6 +51,10 @@ class CharacterType:
         self.validate_range(self._min, value)
         self._max = value
 
+    @property
+    def candidate(self) -> list:
+        return self._candidate
+
     def generate(self, length: int) -> None:
         self.validate_candidate(self._candidate)
         self.validate_length(length)
