@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 class TestCharacterType(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.uppercase = CharacterType(string.ascii_uppercase.split())
+        self.uppercase = CharacterType(list(string.ascii_uppercase))
 
     def test_create_empty_condidate(self) -> None:
         expected = ErrorMessage.EMPTY_CANDIDATE.value
