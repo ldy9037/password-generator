@@ -46,3 +46,12 @@ class PasswordGenerator:
     def max(self, value: int) -> None:
         self.validate_range(self._min, value)
         self._max = value
+
+    def sum_range(self) -> tuple:
+        min, max = 0, 0
+
+        for type in self.types.values():
+            min += type.min
+            max += type.max
+
+        return (min, max)

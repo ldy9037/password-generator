@@ -2,6 +2,7 @@ import os
 import string
 import sys
 import unittest
+import random
 
 from password_generator import PasswordGenerator
 from error_message import ErrorMessage
@@ -55,6 +56,21 @@ class TestPasswordGenerator(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, expected):
                 self.generator.max = num
+
+    def test_sum_char_type_length_range(self) -> None:
+        expected_min = 0
+        expected_max = 0
+
+        for type in self.generator.types.values():
+            type.min = random.randrange(0, 5)
+            expected_min += type.min
+
+            type.max = random.randrange(5, 9)
+            expected_max += type.max
+
+        self.assertTupleEqual(
+            self.generator.sum_range(),
+            (expected_min, expected_max))
 
 
 if __name__ == '__main__':
