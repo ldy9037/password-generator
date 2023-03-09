@@ -29,6 +29,10 @@ class PasswordGenerator:
         if min > max:
             raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
 
+    def validate_char_types(self) -> None:
+        if not self.types:
+            raise ValueError(ErrorMessage.EMPTY_CHAR_TYPE_LIST.value)
+
     @property
     def min(self) -> int:
         return self._min
@@ -48,6 +52,8 @@ class PasswordGenerator:
         self._max = value
 
     def sum_range(self) -> tuple:
+        self.validate_char_types()
+
         min, max = 0, 0
 
         for type in self.types.values():

@@ -72,6 +72,13 @@ class TestPasswordGenerator(unittest.TestCase):
             self.generator.sum_range(),
             (expected_min, expected_max))
 
+    def test_sum_char_type_length_range_with_empty_types(self) -> None:
+        expected = ErrorMessage.EMPTY_CHAR_TYPE_LIST.value
+        self.generator.types = []
+
+        with self.assertRaisesRegex(ValueError, expected):
+            self.generator.sum_range()
+
 
 if __name__ == '__main__':
     unittest.main()
