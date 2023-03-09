@@ -33,6 +33,10 @@ class PasswordGenerator:
         if not self.types:
             raise ValueError(ErrorMessage.EMPTY_CHAR_TYPE_LIST.value)
 
+        for char_type in self.types.values():
+            if type(char_type) != CharacterType:
+                raise TypeError(ErrorMessage.NOT_CHARACTER_TYPE.value)
+
     @property
     def min(self) -> int:
         return self._min

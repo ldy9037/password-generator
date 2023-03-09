@@ -10,3 +10,4 @@ class ErrorMessage(Enum):
     GENERATE_LENGTH_OUT_OF_RANGE = "The length of the character list must be equal to or greater than min and equal to or less than max."
     GENERATE_LENGTH_NOT_NUMBERIC = "The generate length must be numberic."
     EMPTY_CHAR_TYPE_LIST = "At least one character type must be added to the list of character types."
+    NOT_CHARACTER_TYPE = "A character type list can contain only CharacterType types."

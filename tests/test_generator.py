@@ -79,6 +79,16 @@ class TestPasswordGenerator(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, expected):
             self.generator.sum_range()
 
+    def test_sum_char_type_length_range_with_other_types(self) -> None:
+        expected = ErrorMessage.NOT_CHARACTER_TYPE.value
+        other_types = ["str", 1, [1, 2], {"test": "t"}]
+
+        for other_type in other_types:
+            self.generator.types["none_character_type"] = other_type
+
+            with self.assertRaisesRegex(TypeError, expected):
+                self.generator.sum_range()
+
 
 if __name__ == '__main__':
     unittest.main()
