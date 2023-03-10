@@ -37,6 +37,13 @@ class PasswordGenerator:
             if type(char_type) != CharacterType:
                 raise TypeError(ErrorMessage.NOT_CHARACTER_TYPE.value)
 
+    def validate_adjust_range(self, min: int, max: int) -> None:
+        if min > self.max:
+            raise ValueError(ErrorMessage.GENERATOR_MAX_LT_CHAR_TYPE_MIN.value)
+
+        if max < self.min:
+            raise ValueError(ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value)
+
     @property
     def min(self) -> int:
         return self._min
@@ -65,3 +72,8 @@ class PasswordGenerator:
             max += type.max
 
         return (min, max)
+
+    def adjust_length(self) -> None:
+        min, max = self.sum_range()
+
+        self.validate_adjust_range(min, max)

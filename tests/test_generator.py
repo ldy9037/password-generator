@@ -89,6 +89,21 @@ class TestPasswordGenerator(unittest.TestCase):
             with self.assertRaisesRegex(TypeError, expected):
                 self.generator.sum_range()
 
+    def adjust_length_range_with_worng_char_type_length_range(self) -> None:
+        min, max = self.generator.sum_range()
+
+        self.generator.min = 0
+        self.generator.max = min - 1
+        expected = ErrorMessage.GENERATOR_MAX_LT_CHAR_TYPE_MIN.value
+        with self.assertRaisesRegex(ValueError, expected):
+            self.generator.adjust_length()
+
+        self.generator.min = max + 1
+        self.generator.max = int(float("inf"))
+        expected = ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value
+        with self.assertRaisesRegex(ValueError, expected):
+            self.generator.adjust_length()
+
 
 if __name__ == '__main__':
     unittest.main()

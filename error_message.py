@@ -11,3 +11,5 @@ class ErrorMessage(Enum):
     GENERATE_LENGTH_NOT_NUMBERIC = "The generate length must be numberic."
     EMPTY_CHAR_TYPE_LIST = "At least one character type must be added to the list of character types."
     NOT_CHARACTER_TYPE = "A character type list can contain only CharacterType types."
+    GENERATOR_MAX_LT_CHAR_TYPE_MIN = "The password generator's MAX value must be greater than the MIN of the character type."
+    GENERATOR_MIN_GT_CHAR_TYPE_MAX = "The password generator's MIN value must be less than the character type's MAX."
