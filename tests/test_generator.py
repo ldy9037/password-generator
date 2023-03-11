@@ -104,6 +104,16 @@ class TestPasswordGenerator(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, expected):
             self.generator.adjust_length()
 
+    def adjust_length_range_with_zero_max(self) -> None:
+        expected = ErrorMessage.ADJUST_MAX_IS_ZERO.value
+
+        for type in self.generator.types:
+            type.min = 0
+            type.max = 0
+
+        with self.assertRaisesRegex(ValueError, expected):
+            self.generator.adjust_length()
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -44,6 +44,9 @@ class PasswordGenerator:
         if max < self.min:
             raise ValueError(ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value)
 
+        if not max > 0:
+            raise ValueError(ErrorMessage.ADJUST_MAX_IS_ZERO.value)
+
     @property
     def min(self) -> int:
         return self._min
