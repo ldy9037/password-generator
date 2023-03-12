@@ -79,7 +79,10 @@ class PasswordGenerator:
 
         return (min, max)
 
-    def adjust_length(self) -> None:
-        min, max = self.sum_range()
+    def adjust_length(self, sum_min: int, sum_max: int) -> tuple:
+        self.validate_adjust_range(sum_min, sum_max)
 
-        self.validate_adjust_range(min, max)
+        adjust_min = self.min if self.min > sum_min else sum_min
+        adjust_max = self.max if self.max < sum_max else sum_max
+
+        return (adjust_min, adjust_max)

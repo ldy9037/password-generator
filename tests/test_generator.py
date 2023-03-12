@@ -101,7 +101,7 @@ class TestPasswordGenerator(unittest.TestCase):
         expected = ErrorMessage.GENERATOR_MAX_LT_CHAR_TYPE_MIN.value
 
         with self.assertRaisesRegex(ValueError, expected):
-            self.generator.adjust_length()
+            self.generator.adjust_length(min, max)
 
         self.generator.max = max + 2
         self.generator.min = max + 1
@@ -109,7 +109,7 @@ class TestPasswordGenerator(unittest.TestCase):
         expected = ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value
 
         with self.assertRaisesRegex(ValueError, expected):
-            self.generator.adjust_length()
+            self.generator.adjust_length(min, max)
 
     def test_adjust_length_range_with_zero_max(self) -> None:
         expected = ErrorMessage.ADJUST_MAX_IS_ZERO.value
@@ -118,8 +118,27 @@ class TestPasswordGenerator(unittest.TestCase):
             type.min = 0
             type.max = 0
 
+        min, max = self.generator.sum_range()
+
         with self.assertRaisesRegex(ValueError, expected):
-            self.generator.adjust_length()
+            self.generator.adjust_length(min, max)
+
+    def test_adjust_length_range(self) -> None:
+        range = [
+            (self.generator.min - 1, self.generator.max - 1),
+            (self.generator.min + 1, self.generator.max - 1),
+            (self.generator.min + 1, self.generator.max + 1)
+        ]
+
+        expected = [
+            (self.generator.min, self.generator.max - 1),
+            (self.generator.min + 1, self.generator.max - 1),
+            (self.generator.min + 1, self.generator.max)
+        ]
+
+        for r, e in zip(range, expected):
+            min, max = self.generator.adjust_length(r[0], r[1])
+            self.assertTupleEqual((min, max), e)
 
 
 if __name__ == '__main__':
