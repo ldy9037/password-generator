@@ -26,8 +26,29 @@ class PasswordGenerator:
         if min < 0 or max < 0:
             raise ValueError(ErrorMessage.MIN_MAX_NAGATIVE.value)
 
+        if max <= 0:
+            raise ValueError(ErrorMessage.GENERATOR_MAX_NOT_POSITIVE.value)
+
         if min > max:
             raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
+
+    def validate_char_types(self) -> None:
+        if not self.types:
+            raise ValueError(ErrorMessage.EMPTY_CHAR_TYPE_LIST.value)
+
+        for char_type in self.types.values():
+            if type(char_type) != CharacterType:
+                raise TypeError(ErrorMessage.NOT_CHARACTER_TYPE.value)
+
+    def validate_adjust_range(self, min: int, max: int) -> None:
+        if not max > 0:
+            raise ValueError(ErrorMessage.ADJUST_MAX_IS_ZERO.value)
+
+        if min > self.max:
+            raise ValueError(ErrorMessage.GENERATOR_MAX_LT_CHAR_TYPE_MIN.value)
+
+        if max < self.min:
+            raise ValueError(ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value)
 
     @property
     def min(self) -> int:
@@ -46,3 +67,22 @@ class PasswordGenerator:
     def max(self, value: int) -> None:
         self.validate_range(self._min, value)
         self._max = value
+
+    def sum_range(self) -> tuple:
+        self.validate_char_types()
+
+        min, max = 0, 0
+
+        for type in self.types.values():
+            min += type.min
+            max += type.max
+
+        return (min, max)
+
+    def adjust_length(self, sum_min: int, sum_max: int) -> tuple:
+        self.validate_adjust_range(sum_min, sum_max)
+
+        adjust_min = self.min if self.min > sum_min else sum_min
+        adjust_max = self.max if self.max < sum_max else sum_max
+
+        return (adjust_min, adjust_max)
