@@ -26,6 +26,9 @@ class PasswordGenerator:
         if min < 0 or max < 0:
             raise ValueError(ErrorMessage.MIN_MAX_NAGATIVE.value)
 
+        if max <= 0:
+            raise ValueError(ErrorMessage.GENERATOR_MAX_NOT_POSITIVE.value)
+
         if min > max:
             raise ValueError(ErrorMessage.MIN_MAX_INVALID_RANGE.value)
 

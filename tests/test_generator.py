@@ -30,7 +30,7 @@ class TestPasswordGenerator(unittest.TestCase):
     def test_set_min_greater_than_max(self):
         expected = ErrorMessage.MIN_MAX_INVALID_RANGE.value
 
-        for min in range(1, 10):
+        for min in range(2, 10):
             with self.assertRaisesRegex(ValueError, expected):
                 self.generator.min = min
                 self.generator.max = min - 1
@@ -46,7 +46,7 @@ class TestPasswordGenerator(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, expected):
                 self.generator.max = num
 
-    def test_set_negative_number_min_max(self) -> None:
+    def test_set_min_with_negative_number(self) -> None:
         nums = [-1, -3, -11]
         expected = ErrorMessage.MIN_MAX_NAGATIVE.value
 
@@ -54,8 +54,11 @@ class TestPasswordGenerator(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, expected):
                 self.generator.min = num
 
-            with self.assertRaisesRegex(ValueError, expected):
-                self.generator.max = num
+    def test_set_max_with_zero_number(self) -> None:
+        expected = ErrorMessage.GENERATOR_MAX_NOT_POSITIVE.value
+
+        with self.assertRaisesRegex(ValueError, expected):
+            self.generator.max = 0
 
     def test_sum_char_type_length_range(self) -> None:
         expected_min = 0
