@@ -38,14 +38,14 @@ class PasswordGenerator:
                 raise TypeError(ErrorMessage.NOT_CHARACTER_TYPE.value)
 
     def validate_adjust_range(self, min: int, max: int) -> None:
+        if not max > 0:
+            raise ValueError(ErrorMessage.ADJUST_MAX_IS_ZERO.value)
+
         if min > self.max:
             raise ValueError(ErrorMessage.GENERATOR_MAX_LT_CHAR_TYPE_MIN.value)
 
         if max < self.min:
             raise ValueError(ErrorMessage.GENERATOR_MIN_GT_CHAR_TYPE_MAX.value)
-
-        if not max > 0:
-            raise ValueError(ErrorMessage.ADJUST_MAX_IS_ZERO.value)
 
     @property
     def min(self) -> int:
