@@ -1,6 +1,6 @@
 import string
 
-from random import choices
+from random import choices, randrange, shuffle
 from error_message import ErrorMessage
 from character_type import CharacterType
 
@@ -118,3 +118,10 @@ class PasswordGenerator:
             count -= 1
 
         return result
+
+    def generate(self) -> str:
+        length = randrange(self.min, self.max + 1)
+        char_list = self.generate_character_list(length)
+        shuffle(char_list)
+
+        return ''.join(char_list)
