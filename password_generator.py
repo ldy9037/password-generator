@@ -1,5 +1,6 @@
 import string
 
+from random import choices
 from error_message import ErrorMessage
 from character_type import CharacterType
 
@@ -86,3 +87,34 @@ class PasswordGenerator:
         adjust_max = self.max if self.max < sum_max else sum_max
 
         return (adjust_min, adjust_max)
+
+    def generate_character_list(self, length: int) -> list:
+        result = []
+
+        for k, v in self.distribute_length(length).items():
+            self.types[k].generate(v)
+            result += self.types[k].characters
+
+        return result
+
+    def distribute_length(self, length: int) -> dict:
+        result = dict()
+        select = dict()
+        count = length
+
+        for k, v in self.types.items():
+            select[k] = len(v.candidate)
+            result[k] = v.min
+            count -= v.min
+
+        while count > 0:
+            name = choices(list(select.keys()), list(select.values()))[0]
+
+            if result[name] >= self.types[name].max:
+                select.pop(name)
+                continue
+
+            result[name] += 1
+            count -= 1
+
+        return result
