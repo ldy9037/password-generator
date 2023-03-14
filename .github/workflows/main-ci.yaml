@@ -33,6 +33,7 @@ jobs:
     - name: Lint with flake8
       run: |
         mypy ./character_type.py
+        mypy ./password_generator.py
         flake8 . --show-source --statistics
     - name: Test with pytest
       run: |
