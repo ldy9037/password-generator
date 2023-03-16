@@ -32,8 +32,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
-        mypy ./character_type.py
-        mypy ./password_generator.py
+        mypy ./src/rpgen/character_type.py
+        mypy ./src/rpgen/password_generator.py
         flake8 . --show-source --statistics
     - name: Test with pytest
       run: |

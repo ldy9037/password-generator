@@ -1,12 +1,8 @@
-import os
-import sys
 import unittest
 import string
 
-from character_type import CharacterType
-from error_message import ErrorMessage
-
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from rpgen.character_type import CharacterType
+from rpgen.error_message import ErrorMessage
 
 
 class TestCharacterType(unittest.TestCase):
