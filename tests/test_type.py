@@ -80,6 +80,13 @@ class TestCharacterType(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, expected):
                 self.uppercase.generate(num)
 
+    def test_generate_characters_with_loop(self) -> None:
+        for _ in range(3):
+            self.uppercase.generate(self.uppercase.max)
+
+            length = len(self.uppercase.characters)
+            self.assertEqual(length, self.uppercase.max)
+
 
 if __name__ == '__main__':
     unittest.main()
