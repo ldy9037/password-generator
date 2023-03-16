@@ -59,5 +59,7 @@ class CharacterType:
         self.validate_candidate(self._candidate)
         self.validate_length(length)
 
+        self.characters.clear()
+
         for _ in range(length):
             self.characters.append(choice(self._candidate))

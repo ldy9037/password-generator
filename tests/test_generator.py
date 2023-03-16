@@ -136,11 +136,18 @@ class TestPasswordGenerator(unittest.TestCase):
             min, max = self.generator.adjust_length(r[0], r[1])
             self.assertTupleEqual((min, max), e)
 
-    def test_generate_character_list(self):
+    def test_generate_character_list(self) -> None:
         length = random.randrange(self.generator.min, self.generator.max + 1)
         character_list = self.generator.generate_character_list(length)
 
         self.assertEqual(len(character_list), length)
+
+    def test_generate_with_loop(self) -> None:
+        for _ in range(self.generator.max):
+            length = len(self.generator.generate())
+
+            self.assertLessEqual(length, self.generator.max)
+            self.assertGreaterEqual(length, self.generator.min)
 
 
 if __name__ == '__main__':
