@@ -1,13 +1,9 @@
-import os
 import string
-import sys
 import unittest
 import random
 
-from password_generator import PasswordGenerator
-from error_message import ErrorMessage
-
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from rpgen.password_generator import PasswordGenerator
+from rpgen.error_message import ErrorMessage
 
 
 class TestPasswordGenerator(unittest.TestCase):

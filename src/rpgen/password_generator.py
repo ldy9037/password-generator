@@ -1,8 +1,8 @@
 import string
 
 from random import choices, randrange, shuffle
-from error_message import ErrorMessage
-from character_type import CharacterType
+from rpgen.error_message import ErrorMessage
+from rpgen.character_type import CharacterType
 
 
 class PasswordGenerator:

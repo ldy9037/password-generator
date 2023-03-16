@@ -1,4 +1,4 @@
-from error_message import ErrorMessage
+from rpgen.error_message import ErrorMessage
 from random import choice
 
 
