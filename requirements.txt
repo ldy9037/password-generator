@@ -6,7 +6,6 @@ certifi==2022.12.7
 charset-normalizer==3.1.0
 click==8.1.3
 docutils==0.19
--e git+ssh://git@github.com-personal/ldy9037/python-password-generator.git@5471b744ac0ee1bc5181d879ae093d459acd80eb#egg=emadam_password_generator
 exceptiongroup==1.1.0
 flake8==6.0.0
 idna==3.4
