@@ -17,7 +17,39 @@ If you want to use a password that contains other types of characters or string 
 This password generator has been tested on Python 3.7, 3.8, 3.9 and 3.10.
 
 ## Usage
+Install the rpgen package.
+```
+pip install rpgen
+```
 
+The basic usage is to create a PasswordGenerator object and call its generate method.
+```
+>>> from rpgen.password_generator import PasswordGenerator
+>>> PasswordGenerator().generate()
+"h~'<OT9d#vI%"
+```
+
+You can adjust the password length by setting MIN and MAX.
+```
+>>> generator.min = 5
+>>> generator.max = 5
+>>> generator.generate()
+'7+ZxY'
+```
+
+You can add new text types to type.
+```
+>>> generator.types['korean'] = CharacterType(["가", "나", "다", "라"])
+>>> generator.generate()
+'zN57N[3zv,라'
+```
+
+You can adjust the length of each type of text.
+```
+>>> generator.types['uppercase'].min = 5
+>>> generator.generate()
+'SR:7G0AC_(VIs\\'
+```
 
 ## CharacterType Variable
 | Name | Description | Type | Default |
